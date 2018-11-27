@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.baway.day01.adapter.MyViewPagerAdapter;
 import com.baway.day01.bean.BanerBean;
 import com.baway.day01.util.HttpUtil;
 import com.google.gson.Gson;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
      * XXXXXXXXXXXX
      */
     private TextView mTxtName;
-    //private MyViewPagerAdapter mMyViewPagerAdapter;
+    private MyViewPagerAdapter mMyViewPagerAdapter;
 
 
     @Override
@@ -41,14 +42,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData(String json) {
 
-        //mMyViewPagerAdapter = new MyViewPagerAdapter(this, mDataBeans);
+        mMyViewPagerAdapter = new MyViewPagerAdapter(this, mDataBeans);
 
-        //mVP.setAdapter(mMyViewPagerAdapter);
+        mVP.setAdapter(mMyViewPagerAdapter);
         new HttpUtil(new HttpUtil.HttpLinear() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
                 BanerBean banerBean = gson.fromJson(data, BanerBean.class);
+                BanerBean.DataBean bean = banerBean.getData();
+                List<String> images = bean.getImages();
+                for (int i = 0; i < images.size(); i++) {
+                    
+                }
             }
 
             @Override
